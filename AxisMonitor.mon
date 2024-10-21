@@ -1,0 +1,6 @@
+PosAxisCommand.enableAxis
+PosAxisCommand.jogForward
+PosAxisCommand.jogBackward
+PosAxisCommand.reset
+PosAxisCommand.velocitySetpoint
+PosAxisCommand.actualSpeed

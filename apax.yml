@@ -8,9 +8,11 @@ description: <Description for your application example or app>
 targets:
   - "1500"
   - llvm
+installStrategy: overridable
 # Dependencies
 devDependencies:
   "@ax/sdk": 2405.0.0
+  "@ax/tia2st": ^1.0.7
 
 # Project variables
 variables:
@@ -18,15 +20,19 @@ variables:
     - --debug # Enable debug information for value debugging 
   BIN_FOLDER: "./bin/1500" # choose your target RT, here : any S7-1500 PLC
   # IP address must match with the IP address of your target device
-  # The IP address in the .vscode/launch.json must be equal  
+  # The IP address in the .vscode/launch.json must be equal 
+  TIA_PROJECT_PATH: "C:\\Users\\Siemens\\Desktop\\AX_Code\\Direct-loading_TIADemo\\Direct-loading_TIADemo.ap19"
   IP_ADDRESS: "192.168.0.1"
 
 # Apax scripts
 scripts:
   # call 'apax load' to download the builded program to the target. An 'apax build' might be required upfront
-  load: apax sld load --input $BIN_FOLDER --target $IP_ADDRESS --restart
-    --accept-security-disclaimer --log debug
+  load: apax sld load --input $BIN_FOLDER --target $IP_ADDRESS --restart --accept-security-disclaimer --mode:delta --non-overwriting
+  IMPORT: apax tia2st import -i $TIA_PROJECT_PATH -o ./src/tia-project-access.st -t motioncontrol-native
   # call 'apax dlplc' to build and download the application to the target
   dlplc:
     - apax build
     - apax load
+dependencies:
+  "@ax/simatic-1500-motioncontrol-native-v8": ^6.0.11
+  "@ax/trace": ^2.8.0
