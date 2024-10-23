@@ -11,7 +11,7 @@ FUNCTION_BLOCK FB
     VAR_TEMP
         index : INT;
         shiftIndex : INT;
-        j : INT;
+        index_j : INT;
         temp: INT;               // 临时变量
     END_VAR
     
@@ -21,12 +21,15 @@ FUNCTION_BLOCK FB
                 IF arr1[index] = arr2[shiftIndex] THEN
                     // 找到相同的元素，提取出来
                     temp := arr1[index];
-                    FOR j := index TO 8 DO
-                        arr1[j] := arr1[j+1];
+                    FOR index_j := index TO 8 DO
+                        arr1[index_j] := arr1[index_j+1];
                     END_FOR;
                     arr1[9] := 0; // 将最后一个元素设置为0
                 END_IF;
             END_FOR;
         END_FOR;
+
+        // 将提取出来的元素赋值给变量
+        variable := temp;
 
 END_FUNCTION_BLOCK
